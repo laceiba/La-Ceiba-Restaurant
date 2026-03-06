@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Ceiba Restaurant | Naturaleza y Sabor en La Habana</title>
+  
+  <!-- SEO -->
+  <meta name="description" content="La Ceiba Restaurant: experiencia gastronómica única rodeada de naturaleza. Cocina criolla, mariscos frescos y el mejor ambiente tropical de La Habana.">
+  <meta name="keywords" content="restaurante La Ceiba, La Habana, comida criolla, mariscos, ambiente natural, jardín, Cuba">
+  <meta property="og:title" content="La Ceiba Restaurant | Naturaleza y Sabor">
+  <meta property="og:description" content="Descubre la magia de comer bajo una ceiba centenaria">
+  
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Framer Motion -->
+  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+    
+    :root {
+      --ceiba-green: #2D5016;
+      --ceiba-light: #4A7C23;
+      --ceiba-gold: #D4AF37;
+      --ceiba-wood: #8B4513;
+      --ceiba-cream: #F5F5DC;
+      --ceiba-sand: #F4E4C1;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--ceiba-cream);
+    }
+    
+    .font-display {
+      font-family: 'Cormorant Garamond', serif;
+    }
+    
+    /* Custom Scrollbar - madera/natural */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--ceiba-green), var(--ceiba-wood));
+      border-radius: 6px;
+      border: 3px solid #f1f1f1;
+    }
+    
+    /* Animaciones naturales */
+    @keyframes sway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+    
+    @keyframes float-leaf {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    
+    @keyframes grow {
+      from { transform: scaleY(0); opacity: 0; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+    
+    .animate-sway {
+      animation: sway 4s ease-in-out infinite;
+      transform-origin: bottom center;
+    }
+    
+    .animate-float-leaf {
+      animation: float-leaf 6s ease-in-out infinite;
+    }
+    
+    /* Efectos naturales */
+    .wood-texture {
+      background-image: repeating-linear-gradient(
+        90deg,
+        rgba(139, 69, 19, 0.1) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(139, 69, 19, 0.1) 3px
+      );
+    }
+    
+    .leaf-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 Q40 20 30 35 Q20 20 30 5' fill='none' stroke='%232D5016' stroke-opacity='0.05' stroke-width='1'/%3E%3C/svg%3E");
+    }
+    
+    .glass-natural {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(45, 80, 22, 0.1);
+    }
+    
+    /* Botón orgánico */
+    .btn-organic {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .btn-organic::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    .btn-organic:hover::before {
+      left: 100%;
+    }
+    
+    /* Card hover efecto naturaleza */
+    .card-nature {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(45, 80, 22, 0.1);
+    }
+    .card-nature:hover {
+      transform: translateY(-8px) rotate(1deg);
+      box-shadow: 0 25px 50px -12px rgba(45, 80, 22, 0.25);
+    }
+    
+    /* Texto con efecto dorado */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #D4AF37 0%, #F4E4C1 50%, #D4AF37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Separador orgánico */
+    .divider-organic {
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--ceiba-green), var(--ceiba-gold), var(--ceiba-green), transparent);
+      border-radius: 2px;
+    }
+    
+    /* Input estilo natural */
+    .input-nature {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(45, 80, 22, 0.2);
+      transition: all 0.3s ease;
+    }
+    .input-nature:focus {
+      border-color: var(--ceiba-green);
+      box-shadow: 0 0 0 4px rgba(45, 80, 22, 0.1);
+      outline: none;
+    }
+    
+    /* Toast natural */
+    .toast-nature {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: white;
+      padding: 16px 24px;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(45, 80, 22, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 9999;
+      transform: translateX(400px);
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      border-left: 4px solid var(--ceiba-green);
+    }
+    .toast-nature.show {
+      transform: translateX(0);
+    }
+  </style>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'ceiba-green': '#2D5016',
+            'ceiba-light': '#4A7C23',
+            'ceiba-gold': '#D4AF37',
+            'ceiba-wood': '#8B4513',
+            'ceiba-cream': '#F5F5DC',
+            'ceiba-sand': '#F4E4C1',
+            'ceiba-dark': '#1a2e0c',
+          },
+          fontFamily: {
+            'display': ['Cormorant Garamond', 'serif'],
+            'body': ['Montserrat', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-body bg-ceiba-cream text-gray-800 antialiased leaf-pattern">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback } = React;
+    const { motion, AnimatePresence } = window.Motion;
+    
+    // Iconos personalizados estilo natural
+    const Icon = ({ name, size = 24, className = "" }) => {
+      const icons = {
+        menu: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
+        close: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+        leaf: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>,
+        tree: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 10v.2A3 3 0 0 1 8.9 16v0H5v0h0a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6"/><path d="M13 19v3"/><path d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/></svg>,
+        phone: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+        mapPin: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>,
+        clock: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+        star: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" stroke="none" className={className}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+        chevronRight: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="9 18 15 12 9 6"/></svg>,
+        shoppingBag: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
+        whatsapp: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>,
+        instagram: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>,
+        facebook: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>,
+        plus: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+        minus: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+        trash: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
+        check: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="20 6 9 17 4 12"/></svg>,
+        arrowUp: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>,
+        sun: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>,
+        moon: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+        fish: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6-3.56 0-7.56-2.53-8.5-6Z"/><path d="M18 12v.5"/><path d="M16 17.93a9.77 9.77 0 0 1 0-11.86"/><path d="M7 10.67C7 8 5.58 5.97 2.73 5.5c-1 1.5-1 5 .23 6.5-1.24 1.5-1.24 5-.23 6.5C5.58 18.03 7 16 7 13.33"/><path d="M10.46 7.26C10.2 5.88 9.57 4.63 8.68 3.63"/><path d="M10.46 16.74c.26 1.38.9 2.63 1.78 3.63"/></svg>,
+        flower: <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="m14.12 9.88 1.88-1.88"/><path d="m8 16 1.88-1.88"/><path d="m14.12 14.12 1.88 1.88"/></svg>
+      };
+      return icons[name] || null;
+    };
+    
+    // Toast Component
+    const Toast = ({ message, type, isVisible, onClose }) => {
+      useEffect(() => {
+        if (isVisible) {
+          const timer = setTimeout(onClose, 3000);
+          return () => clearTimeout(timer);
+        }
+      }, [isVisible, onClose]);
+      
+      return (
+        <div className={`toast-nature ${isVisible ? 'show' : ''}`}>
+          <div className="w-10 h-10 rounded-full bg-ceiba-green flex items-center justify-center">
+            <Icon name={type === 'success' ? 'check' : 'leaf'} size={20} className="text-white" />
+          </div>
+          <span className="font-medium text-gray-800 font-body">{message}</span>
+        </div>
+      );
+    };
+    
+    // Header Component - Estilo natural/orgánico
+    const Header = ({ cartCount, onCartClick, onReservaClick, isDark, toggleTheme }) => {
+      const [isScrolled, setIsScrolled] = useState(false);
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      
+      useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 50);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+      
+      const navItems = [
+        { label: 'Inicio', href: '#inicio' },
+        { label: 'Nosotros', href: '#nosotros' },
+        { label: 'Menú', href: '#menu' },
+        { label: 'Galería', href: '#galeria' },
+        { label: 'Contacto', href: '#contacto' },
+      ];
+      
+      return (
+        <motion.header 
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+            isScrolled ? 'glass-natural shadow-lg py-3' : 'bg-transparent py-6'
+          }`}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            {/* Logo con icono de árbol */}
+            <motion.a 
+              href="#inicio"
+              className="flex items-center gap-3"
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center ${isScrolled ? 'bg-ceiba-green' : 'bg-white/20 backdrop-blur-sm'}`}>
+                <Icon name="tree" size={28} className={isScrolled ? 'text-ceiba-gold' : 'text-white'} />
+              </div>
+              <div>
+                <span className={`text-2xl md:text-3xl font-display font-bold tracking-tight block leading-none ${
+                  isScrolled ? 'text-ceiba-green' : 'text-white'
+                }`}>
+                  La Ceiba
+                </span>
+                <span className={`text-xs tracking-[0.3em] uppercase ${isScrolled ? 'text-ceiba-wood' : 'text-white/80'}`}>
+                  Restaurant
+                </span>
+              </div>
+            </motion.a>
+            
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-8">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className={`font-medium transition-all hover:text-ceiba-gold relative group ${
+                    isScrolled ? 'text-gray-700' : 'text-white/90 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-ceiba-gold transition-all group-hover:w-full" />
+                </a>
+              ))}
+            </nav>
+            
+            <div className="flex items-center gap-4">
+              <button
+                onClick={toggleTheme}
+                className={`p-2 rounded-full transition-all ${isScrolled ? 'hover:bg-ceiba-green/10 text-gray-700' : 'hover:bg-white/10 text-white'}`}
+              >
+                <Icon name={isDark ? 'sun' : 'moon'} size={20} />
+              </button>
+              
+              <button
+                onClick={onCartClick}
+                className={`relative p-2 rounded-full transition-all ${isScrolled ? 'hover:bg-ceiba-green/10 text-gray-700' : 'hover:bg-white/10 text-white'}`}
+              >
+                <Icon name="shoppingBag" size={22} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-ceiba-gold text-white text-xs font-bold rounded-full flex items-center justify-center animate-pulse">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+              
+              <button
+                onClick={onReservaClick}
+                className="hidden md:flex items-center gap-2 bg-ceiba-green hover:bg-ceiba-light text-white px-6 py-3 rounded-full font-semibold transition-all shadow-lg hover:shadow-ceiba-green/30 btn-organic"
+              >
+                <Icon name="phone" size={18} />
+                Reservar
+              </button>
+              
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className={`md:hidden p-2 rounded-lg transition-all ${isScrolled ? 'hover:bg-ceiba-green/10' : 'hover:bg-white/10 text-white'}`}
+              >
+                <Icon name={mobileMenuOpen ? 'close' : 'menu'} size={24} />
+              </button>
+            </div>
+          </div>
+          
+          {/* Mobile Menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden glass-natural border-t shadow-xl"
+              >
+                <nav className="flex flex-col p-6 space-y-3">
+                  {navItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="py-3 px-4 rounded-xl hover:bg-ceiba-green/10 text-gray-800 font-medium transition-all flex items-center gap-3"
+                    >
+                      <Icon name="leaf" size={18} className="text-ceiba-green" />
+                      {item.label}
+                    </a>
+                  ))}
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onReservaClick();
+                    }}
+                    className="mt-4 w-full bg-ceiba-green text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    <Icon name="phone" size={20} />
+                    Reservar Mesa
+                  </button>
+                </nav>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.header>
+      );
+    };
+    
+    // Hero Component - Naturaleza exuberante
+    const Hero = ({ onReservaClick }) => {
+      return (
+        <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          {/* Background Image - Jardín tropical */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-fixed"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-ceiba-green/70 via-ceiba-green/40 to-ceiba-dark/80" />
+          </div>
+          
+          {/* Elementos decorativos naturales */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <motion.div 
+              animate={{ rotate: [0, 5, 0], y: [0, -10, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-20 left-10 opacity-20"
+            >
+              <Icon name="leaf" size={120} className="text-white" />
+            </motion.div>
+            <motion.div 
+              animate={{ rotate: [0, -5, 0], y: [0, 15, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-32 right-20 opacity-20"
+            >
+              <Icon name="leaf" size={100} className="text-white transform scale-x-[-1]" />
+            </motion.div>
+          </div>
+          
+          <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring" }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 backdrop-blur-md text-white/90 mb-8 border border-white/20"
+              >
+                <Icon name="tree" size={20} />
+                <span className="text-sm font-medium tracking-wider uppercase">Desde 1985</span>
+              </motion.div>
+              
+              <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-6 leading-none">
+                La Ceiba
+              </h1>
+              
+              <div className="divider-organic max-w-xs mx-auto mb-6" />
+              
+              <p className="text-2xl md:text-4xl text-ceiba-gold font-display italic mb-4">
+                Donde la naturaleza se fusiona con el sabor
+              </p>
+              
+              <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Descubre la magia de comer bajo una ceiba centenaria. 
+                Cocina criolla auténtica, mariscos frescos y un jardín tropical 
+                que te transportará a la Cuba más pura.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <motion.button
+                  onClick={onReservaClick}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="group bg-ceiba-gold hover:bg-yellow-400 text-ceiba-dark px-10 py-5 rounded-full text-lg font-bold transition-all shadow-2xl hover:shadow-ceiba-gold/50 flex items-center gap-3 btn-organic"
+                >
+                  <Icon name="phone" size={22} />
+                  Reserva tu Experiencia
+                  <Icon name="chevronRight" size={20} className="group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+                
+                <motion.a
+                  href="#menu"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white px-10 py-5 rounded-full text-lg font-semibold transition-all border-2 border-white/30"
+                >
+                  Explorar Menú
+                </motion.a>
+              </div>
+            </motion.div>
+            
+            {/* Stats naturales */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="mt-20 grid grid-cols-3 gap-8 max-w-3xl mx-auto"
+            >
+              {[
+                { value: '40+', label: 'Años de historia', icon: 'tree' },
+                { value: '100%', label: 'Ingredientes naturales', icon: 'leaf' },
+                { value: '4.9', label: '⭐ Experiencia', icon: 'flower' },
+              ].map((stat, i) => (
+                <div key={i} className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
+                    <Icon name={stat.icon} size={28} className="text-ceiba-gold" />
+                  </div>
+                  <div className="text-3xl md:text-4xl font-bold text-white font-display">{stat.value}</div>
+                  <div className="text-sm text-white/70 mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+          
+          {/* Scroll Indicator */}
+          <motion.div
+            animate={{ y: [0, 12, 0] }}
+            transition={{ repeat: Infinity, duration: 2.5 }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/60"
+          >
+            <div className="w-7 h-12 border-2 border-white/40 rounded-full flex justify-center pt-2">
+              <motion.div 
+                animate={{ opacity: [1, 0], y: [0, 8] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="w-1.5 h-3 bg-white/60 rounded-full" 
+              />
+            </div>
+          </motion.div>
+        </section>
+      );
+    };
+    
+    // About Section - Historia de la ceiba
+    const AboutSection = () => {
+      return (
+        <section id="nosotros" className="py-24 bg-ceiba-cream wood-texture">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+                  <img 
+                    src="https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    alt="Ceiba centenaria"
+                    className="w-full h-[600px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ceiba-dark/60 to-transparent" />
+                  <div className="absolute bottom-8 left-8 right-8 text-white">
+                    <p className="font-display text-3xl italic">"La ceiba sagrada que nos cobija"</p>
+                  </div>
+                </div>
+                {/* Marco decorativo */}
+                <div className="absolute -top-6 -left-6 w-full h-full border-4 border-ceiba-gold/30 rounded-3xl -z-0" />
+                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-ceiba-green/10 rounded-full blur-2xl" />
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="text-ceiba-green font-semibold tracking-widest uppercase text-sm flex items-center gap-2">
+                  <Icon name="tree" size={18} />
+                  Nuestra Historia
+                </span>
+                <h2 className="font-display text-5xl md:text-6xl font-bold text-ceiba-dark mt-4 mb-6">
+                  Raíces que <span className="text-gold-gradient">alimentan</span>
+                </h2>
+                <div className="divider-organic w-24 mb-8" />
+                
+                <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                  Bajo la sombra de una imponente ceiba centenaria nació nuestro restaurante en 1985. 
+                  Lo que comenzó como una pequeña fonda familiar se ha convertido en un referente 
+                  de la gastronomía criolla cubana.
+                </p>
+                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                  Cada plato que servimos lleva el respeto por la tradición y el amor por los 
+                  ingredientes frescos de nuestra tierra. Pescado del día, vegetales de nuestro 
+                  huerto orgánico y especias que despiertan recuerdos.
+                </p>
+                
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="flex items-start gap-3">
+                    <div className="w-12 h-12 rounded-full bg-ceiba-green/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="fish" size={24} className="text-ceiba-green" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-ceiba-dark">Mariscos Frescos</h4>
+                      <p className="text-sm text-gray-600">Pescado del día</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-12 h-12 rounded-full bg-ceiba-green/10 flex items-center justify-center flex-shrink-0">
+                      <Icon name="leaf" size={24} className="text-ceiba-green" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-ceiba-dark">Huerto Propio</h4>
+                      <p className="text-sm text-gray-600">100% orgánico</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+    
+    // Menu Section - Estilo rústico/natural
+    const MenuSection = ({ addToCart }) => {
+      const [activeCategory, setActiveCategory] = useState('Mariscos');
+      
+      const categories = {
+        'Mariscos': [
+          { id: 1, name: 'Langosta Enchilada', desc: 'Langosta fresca en salsa criolla con especias', price: 1200, priceUSD: 40, image: 'https://images.unsplash.com/photo-1551248429-40975aa4de74?w=400', tags: ['Especialidad'] },
+          { id: 2, name: 'Pulpo al Carbón', desc: 'Pulpo tierno asado con mojo verde', price: 950, priceUSD: 32, image: 'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400' },
+          { id: 3, name: 'Camarones Creole', desc: 'Camarones en salsa de tomate y pimientos', price: 850, priceUSD: 28, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400', tags: ['Popular'] },
+          { id: 4, name: 'Filete de Pescado', desc: 'Pescado del día a la plancha con hierbas', price: 780, priceUSD: 26, image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400' },
+        ],
+        'Criolla': [
+          { id: 5, name: 'Ropa Vieja', desc: 'Carne desmechada en salsa de tomate', price: 680, priceUSD: 23, image: 'https://images.unsplash.com/photo-1534352956036-cd81e27fed21?w=400' },
+          { id: 6, name: 'Masas de Cerdo', desc: 'Trozos de cerdo fritos con cebolla', price: 720, priceUSD: 24, image: 'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=400' },
+          { id: 7, name: 'Bistec de Palomilla', desc: 'Filete de res con cebolla y limón', price: 750, priceUSD: 25, image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=400' },
+        ],
+        'Del Huerto': [
+          { id: 8, name: 'Ensalada Ceiba', desc: 'Mix de hojas verdes, aguacate y mango', price: 450, priceUSD: 15, image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400', tags: ['Vegetariano'] },
+          { id: 9, name: 'Vegetales Asados', desc: 'Calabaza, berenjena y pimientos al carbón', price: 380, priceUSD: 13, image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400', tags: ['Vegano'] },
+          { id: 10, name: 'Tostones Rellenos', desc: 'De yuca con mojo o plátano maduro', price: 320, priceUSD: 11, image: 'https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?w=400' },
+        ],
+        'Bebidas': [
+          { id: 11, name: 'Mojito de la Casa', desc: 'Ron, hierbabuena, limón, soda', price: 380, priceUSD: 13, image: 'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400', tags: ['Clásico'] },
+          { id: 12, name: 'Piña Colada', desc: 'Ron, crema de coco, piña natural', price: 420, priceUSD: 14, image: 'https://images.unsplash.com/photo-1577805947697-89e18249d767?w=400' },
+          { id: 13, name: 'Jugos Naturales', desc: 'Guayaba, mango, piña o maracuyá', price: 180, priceUSD: 6, image: 'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=400' },
+        ],
+      };
+      
+      return (
+        <section id="menu" className="py-24 bg-white relative overflow-hidden">
+          {/* Decoración de hojas */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-ceiba-green/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-ceiba-gold/5 rounded-full blur-3xl" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="text-ceiba-green font-semibold tracking-widest uppercase text-sm flex items-center justify-center gap-2">
+                <Icon name="leaf" size={18} />
+                Nuestra Carta
+              </span>
+              <h2 className="font-display text-5xl md:text-7xl font-bold text-ceiba-dark mt-4 mb-6">
+                Sabores de la <span className="text-gold-gradient">Tierra</span>
+              </h2>
+              <div className="divider-organic max-w-xs mx-auto" />
+            </motion.div>
+            
+            {/* Category Tabs - Estilo píldoras orgánicas */}
+            <div className="flex flex-wrap justify-center gap-4 mb-16">
+              {Object.keys(categories).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-8 py-4 rounded-full font-semibold transition-all duration-300 ${
+                    activeCategory === cat
+                      ? 'bg-ceiba-green text-white shadow-xl scale-105'
+                      : 'bg-ceiba-cream text-ceiba-dark hover:bg-ceiba-green/10 border-2 border-ceiba-green/20'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+            
+            {/* Menu Grid */}
+            <motion.div
+              layout
+              className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+            >
+              <AnimatePresence mode="popLayout">
+                {categories[activeCategory].map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="card-nature bg-white rounded-3xl overflow-hidden shadow-lg group"
+                  >
+                    <div className="relative h-56 overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-ceiba-dark/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {item.tags?.map(tag => (
+                        <span key={tag} className="absolute top-4 left-4 bg-ceiba-gold text-ceiba-dark text-xs font-bold px-4 py-2 rounded-full shadow-lg">
+                          {tag}
+                        </span>
+                      ))}
+                      
+                      <button
+                        onClick={() => addToCart(item)}
+                        className="absolute bottom-4 right-4 w-12 h-12 bg-white text-ceiba-green rounded-full shadow-xl flex items-center justify-center transform translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-ceiba-green hover:text-white"
+                      >
+                        <Icon name="plus" size={24} />
+                      </button>
+                    </div>
+                    
+                    <div className="p-6">
+                      <h3 className="font-display text-2xl font-bold text-ceiba-dark mb-2">{item.name}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">{item.desc}</p>
+                      
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="block text-ceiba-green font-bold text-xl">{item.price} CUP</span>
+                          <span className="text-gray-400 text-sm">${item.priceUSD}</span>
+                        </div>
+                        <button
+                          onClick={() => addToCart(item)}
+                          className="px-4 py-2 bg-ceiba-cream text-ceiba-green rounded-full font-semibold hover:bg-ceiba-green hover:text-white transition-all text-sm"
+                        >
+                          Añadir
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </section>
+      );
+    };
+    
+    // Gallery - Estilo natural/jardín
+    const Gallery = () => {
+      const [selectedImage, setSelectedImage] = useState(null);
+      
+      const images = [
+        { src: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800', title: 'Nuestro Jardín', category: 'Ambiente' },
+        { src: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800', title: 'Cena Bajo las Estrellas', category: 'Noches' },
+        { src: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800', title: 'Langosta Fresca', category: 'Platos' },
+        { src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800', title: 'Mesa para Dos', category: 'Romántico' },
+        { src: 'https://images.unsplash.com/photo-1550966871-3ed3c47e2ce2?w=800', title: 'Cócteles Naturales', category: 'Bar' },
+        { src: 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=800', title: 'La Ceiba Centenaria', category: 'Naturaleza' },
+      ];
+      
+      return (
+        <section id="galeria" className="py-24 bg-ceiba-cream wood-texture">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="text-ceiba-green font-semibold tracking-widest uppercase text-sm flex items-center justify-center gap-2">
+                <Icon name="flower" size={18} />
+                Galería
+              </span>
+              <h2 className="font-display text-5xl md:text-7xl font-bold text-ceiba-dark mt-4">
+                Momentos bajo la <span className="text-gold-gradient">Ceiba</span>
+              </h2>
+            </motion.div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {images.map((img, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  onClick={() => setSelectedImage(img)}
+                  className={`relative overflow-hidden rounded-3xl cursor-pointer group shadow-xl ${i === 0 || i === 4 ? 'md:col-span-2 md:row-span-2' : ''}`}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ceiba-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                    <div>
+                      <span className="text-ceiba-gold text-sm font-semibold uppercase tracking-wider">{img.category}</span>
+                      <h3 className="text-white font-display text-2xl font-bold mt-1">{img.title}</h3>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Lightbox */}
+          <AnimatePresence>
+            {selectedImage && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedImage(null)}
+                className="fixed inset-0 z-50 bg-ceiba-dark/95 backdrop-blur-md flex items-center justify-center p-4"
+              >
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  className="absolute top-6 right-6 text-white/70 hover:text-white p-2"
+                >
+                  <Icon name="close" size={32} />
+                </button>
+                <motion.img
+                  initial={{ scale: 0.9 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0.9 }}
+                  src={selectedImage.src}
+                  alt={selectedImage.title}
+                  className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                <div className="absolute bottom-8 left-0 right-0 text-center text-white">
+                  <h3 className="font-display text-3xl font-bold">{selectedImage.title}</h3>
+                  <p className="text-ceiba-gold">{selectedImage.category}</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </section>
+      );
+    };
+    
+    // Testimonials - Estilo orgánico
+    const Testimonials = () => {
+      const reviews = [
+        {
+          name: 'Roberto Fuentes',
+          role: 'México DF',
+          text: 'Una experiencia mágica. Comer bajo esa ceiba centenaria mientras disfrutas de una langosta espectacular... incomparable.',
+          rating: 5,
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100'
+        },
+        {
+          name: 'Isabella Marino',
+          role: 'Roma, Italia',
+          text: 'El jardín es un sueño tropical. Los mojitos son los mejores de La Habana y el servicio es de primera. Volveré seguro.',
+          rating: 5,
+          image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100'
+        },
+        {
+          name: 'Carlos Mendoza',
+          role: 'Santiago de Cuba',
+          text: 'Llevo a mi familia cada vez que visito La Habana. La consistencia en la calidad durante años es admirable.',
+          rating: 5,
+          image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100'
+        },
+        {
+          name: 'Emma Thompson',
+          role: 'Londres, UK',
+          text: 'Found this gem through locals. The atmosphere is enchanting and the seafood incredibly fresh. A must-visit!',
+          rating: 5,
+          image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100'
+        }
+      ];
+      
+      return (
+        <section id="testimonios" className="py-24 bg-white relative">
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #2D5016 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
+            >
+              <span className="text-ceiba-green font-semibold tracking-widest uppercase text-sm flex items-center justify-center gap-2">
+                <Icon name="star" size={18} />
+                Testimonios
+              </span>
+              <h2 className="font-display text-5xl md:text-7xl font-bold text-ceiba-dark mt-4">
+                Lo que dice la <span className="text-gold-gradient">gente</span>
+              </h2>
+            </motion.div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {reviews.map((review, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="bg-ceiba-cream p-8 rounded-3xl shadow-lg card-nature relative"
+                >
+                  <div className="absolute -top-4 left-8">
+                    <Icon name="tree" size={32} className="text-ceiba-green/20" />
+                  </div>
+                  
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Icon key={j} name="star" size={16} className={j < review.rating ? 'text-ceiba-gold' : 'text-gray-300'} />
+                    ))}
+                  </div>
+                  
+                  <p className="text-gray-700 mb-6 italic leading-relaxed">"{review.text}"</p>
+                  
+                  <div className="flex items-center gap-4">
+                    <img src={review.image} alt={review.name} className="w-14 h-14 rounded-full object-cover border-2 border-ceiba-gold" />
+                    <div>
+                      <h4 className="font-bold text-ceiba-dark">{review.name}</h4>
+                      <p className="text-sm text-gray-500">{review.role}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+    
+    // Location & Contact - Integrado con naturaleza
+    const Location = () => {
+      return (
+        <section id="contacto" className="py-24 bg-ceiba-dark text-white relative overflow-hidden">
+          {/* Decoración orgánica */}
+          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-ceiba-cream to-transparent" />
+          <div className="absolute -right-20 top-1/2 w-96 h-96 bg-ceiba-green/20 rounded-full blur-3xl" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <span className="text-ceiba-gold font-semibold tracking-widest uppercase text-sm flex items-center gap-2">
+                  <Icon name="mapPin" size={18} />
+                  Visítanos
+                </span>
+                <h2 className="font-display text-5xl md:text-6xl font-bold mt-4 mb-6">
+                  Te esperamos en el <span className="text-gold-gradient">paraíso</span>
+                </h2>
+                
+                <p className="text-gray-300 text-lg mb-10 leading-relaxed">
+                  Ubicados en el corazón de La Habana, rodeados de vegetación tropical. 
+                  Un oasis de paz donde la naturaleza y la gastronomía se encuentran.
+                </p>
+                
+                <div className="space-y-6">
+                  {[
+                    { icon: 'mapPin', title: 'Dirección', text: 'Avenida 31 e/ 76 y 80, Marianao\nLa Habana, Cuba' },
+                    { icon: 'clock', title: 'Horario', text: 'Martes a Domingo\n12:00 PM - 11:00 PM' },
+                    { icon: 'phone', title: 'Contacto', text: '+53 7 260 5078\nreservas@laceiba.ha' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="w-14 h-14 rounded-2xl bg-ceiba-green/20 flex items-center justify-center flex-shrink-0">
+                        <Icon name={item.icon} size={24} className="text-ceiba-gold" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-white text-lg">{item.title}</h4>
+                        <p className="text-gray-400 whitespace-pre-line">{item.text}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex gap-4 mt-10">
+                  <a href="#" className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center hover:scale-110 transition-transform">
+                    <Icon name="facebook" size={24} />
+                  </a>
+                                    <a href="#" className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center hover:scale-110 transition-transform">
+                    <Icon name="instagram" size={24} />
+                  </a>
+                  <a href="https://wa.me/5372605078" target="_blank" className="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center hover:scale-110 transition-transform">
+                    <Icon name="whatsapp" size={24} />
+                  </a>
+                </div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="h-[500px] rounded-3xl overflow-hidden shadow-2xl border-4 border-ceiba-gold/30"
+              >
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3666.0341234567!2d-82.682392!3d22.9709144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88cd110033764cc5%3A0x67f03e225e3d1aa3!2sLa%20Ceiba%20Restaurant!5e0!3m2!1ses-419!2ses!4v1680000000000"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Ubicación La Ceiba Restaurant"
+                />
+              </motion.div>
+            </div>
+          </div>
+        </section>
+      );
+    };
+    
+    // Footer - Estilo natural/organico
+    const Footer = () => {
+      return (
+        <footer className="bg-ceiba-dark text-white py-16 relative overflow-hidden">
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0 wood-texture" />
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid md:grid-cols-4 gap-12 mb-12">
+              <div className="md:col-span-2">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-14 h-14 rounded-full bg-ceiba-green flex items-center justify-center">
+                    <Icon name="tree" size={32} className="text-ceiba-gold" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-3xl font-bold text-ceiba-gold">La Ceiba</h3>
+                    <span className="text-sm tracking-[0.3em] uppercase text-gray-400">Restaurant</span>
+                  </div>
+                </div>
+                <p className="text-gray-400 max-w-md leading-relaxed mb-6">
+                  Desde 1985, bajo la sombra de nuestra ceiba centenaria, 
+                  ofrecemos una experiencia gastronómica única donde la naturaleza 
+                  y la tradición cubana se fusionan.
+                </p>
+                <div className="flex items-center gap-2 text-ceiba-gold">
+                  <Icon name="leaf" size={20} />
+                  <span className="font-semibold">100% Naturaleza • 100% Sabor</span>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-bold text-lg mb-6 text-ceiba-gold flex items-center gap-2">
+                  <Icon name="flower" size={20} />
+                  Enlaces Rápidos
+                </h4>
+                <ul className="space-y-3 text-gray-400">
+                  <li><a href="#inicio" className="hover:text-ceiba-gold transition-colors flex items-center gap-2"><Icon name="chevronRight" size={16} /> Inicio</a></li>
+                  <li><a href="#nosotros" className="hover:text-ceiba-gold transition-colors flex items-center gap-2"><Icon name="chevronRight" size={16} /> Nosotros</a></li>
+                  <li><a href="#menu" className="hover:text-ceiba-gold transition-colors flex items-center gap-2"><Icon name="chevronRight" size={16} /> Menú</a></li>
+                  <li><a href="#galeria" className="hover:text-ceiba-gold transition-colors flex items-center gap-2"><Icon name="chevronRight" size={16} /> Galería</a></li>
+                  <li><a href="#contacto" className="hover:text-ceiba-gold transition-colors flex items-center gap-2"><Icon name="chevronRight" size={16} /> Contacto</a></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-bold text-lg mb-6 text-ceiba-gold flex items-center gap-2">
+                  <Icon name="phone" size={20} />
+                  Contacto
+                </h4>
+                <ul className="space-y-3 text-gray-400">
+                  <li className="flex items-center gap-3">
+                    <Icon name="mapPin" size={18} className="text-ceiba-green" />
+                    <span>Ave. 31 e/ 76 y 80, Marianao</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Icon name="phone" size={18} className="text-ceiba-green" />
+                    <span>+53 7 260 5078</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <Icon name="clock" size={18} className="text-ceiba-green" />
+                    <span>Mar-Dom: 12pm - 11pm</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="border-t border-ceiba-green/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-gray-500 text-sm">© 2025 La Ceiba Restaurant. Todos los derechos reservados.</p>
+              <div className="flex gap-6 text-sm text-gray-500">
+                <a href="#" className="hover:text-ceiba-gold transition-colors">Política de privacidad</a>
+                <a href="#" className="hover:text-ceiba-gold transition-colors">Términos de servicio</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      );
+    };
+    
+    // Cart Sidebar - Estilo natural
+    const CartSidebar = ({ isOpen, onClose, cart, updateQuantity, removeFromCart, onCheckout }) => {
+      const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const totalUSD = cart.reduce((sum, item) => sum + (item.priceUSD * item.quantity), 0);
+      
+      return (
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={onClose}
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+              />
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="fixed right-0 top-0 h-full w-full max-w-md bg-ceiba-cream shadow-2xl z-50 flex flex-col"
+              >
+                <div className="p-6 border-b border-ceiba-green/20 flex items-center justify-between bg-white">
+                  <h2 className="font-display text-2xl font-bold text-ceiba-dark flex items-center gap-2">
+                    <Icon name="shoppingBag" size={24} className="text-ceiba-green" />
+                    Tu Pedido ({cart.length})
+                  </h2>
+                  <button onClick={onClose} className="p-2 hover:bg-ceiba-green/10 rounded-full transition-colors">
+                    <Icon name="close" size={24} className="text-ceiba-dark" />
+                  </button>
+                </div>
+                
+                <div className="flex-1 overflow-y-auto p-6">
+                  {cart.length === 0 ? (
+                    <div className="text-center py-12 text-gray-500">
+                      <Icon name="leaf" size={64} className="mx-auto mb-4 opacity-20" />
+                      <p className="text-lg">Tu canasta está vacía</p>
+                      <button onClick={onClose} className="mt-4 text-ceiba-green font-semibold hover:underline">
+                        Ver menú
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {cart.map((item) => (
+                        <div key={item.id} className="flex gap-4 bg-white p-4 rounded-2xl shadow-md border border-ceiba-green/10">
+                          <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded-xl" />
+                          <div className="flex-1">
+                            <h4 className="font-bold text-ceiba-dark font-display text-lg">{item.name}</h4>
+                            <p className="text-ceiba-green font-semibold">{item.price} CUP</p>
+                            
+                            <div className="flex items-center gap-3 mt-2">
+                              <button
+                                onClick={() => updateQuantity(item.id, -1)}
+                                className="w-8 h-8 rounded-full bg-ceiba-cream flex items-center justify-center hover:bg-ceiba-green hover:text-white transition-all"
+                              >
+                                <Icon name="minus" size={16} />
+                              </button>
+                              <span className="font-semibold w-8 text-center text-ceiba-dark">{item.quantity}</span>
+                              <button
+                                onClick={() => updateQuantity(item.id, 1)}
+                                className="w-8 h-8 rounded-full bg-ceiba-cream flex items-center justify-center hover:bg-ceiba-green hover:text-white transition-all"
+                              >
+                                <Icon name="plus" size={16} />
+                              </button>
+                              <button
+                                onClick={() => removeFromCart(item.id)}
+                                className="ml-auto text-red-500 hover:text-red-700 p-2 hover:bg-red-50 rounded-full transition-all"
+                              >
+                                <Icon name="trash" size={18} />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {cart.length > 0 && (
+                  <div className="p-6 border-t border-ceiba-green/20 bg-white">
+                    <div className="flex justify-between mb-2 text-gray-600">
+                      <span>Subtotal</span>
+                      <span>{total} CUP (${totalUSD})</span>
+                    </div>
+                    <div className="flex justify-between mb-4 text-xl font-bold text-ceiba-dark">
+                      <span>Total</span>
+                      <span className="text-ceiba-green">{total} CUP</span>
+                    </div>
+                    <button
+                      onClick={onCheckout}
+                      className="w-full bg-ceiba-green hover:bg-ceiba-light text-white py-4 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-ceiba-green/30"
+                    >
+                      <Icon name="whatsapp" size={24} />
+                      Pedir por WhatsApp
+                    </button>
+                  </div>
+                )}
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      );
+    };
+    
+    // Reservation Modal - Estilo natural/organico
+    const ReservationModal = ({ isOpen, onClose, showToast }) => {
+      const [step, setStep] = useState(1);
+      const [formData, setFormData] = useState({
+        nombre: '',
+        apellido: '',
+        telefono: '',
+        fecha: '',
+        hora: '',
+        personas: '2',
+        ocasion: '',
+        ubicacion: 'jardin',
+        notas: ''
+      });
+      
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const numero = '5372605078';
+        const mensaje = `🌳 *Nueva Reserva - La Ceiba Restaurant*
+
+*Cliente:* ${formData.nombre} ${formData.apellido}
+*Teléfono:* ${formData.telefono}
+*Fecha:* ${formData.fecha}
+*Hora:* ${formData.hora}
+*Personas:* ${formData.personas}
+*Ubicación:* ${formData.ubicacion === 'jardin' ? 'Jardín Principal' : formData.ubicacion === 'terraza' ? 'Terraza' : 'Salón Interior'}
+*Ocasión:* ${formData.ocasion || 'Ninguna'}
+*Notas especiales:* ${formData.notas || 'Ninguna'}
+
+¡Nos vemos bajo la ceiba! 🌿`;
+        
+        const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
+        
+        showToast('Redirigiendo a WhatsApp...', 'success');
+        onClose();
+        setStep(1);
+        setFormData({
+          nombre: '', apellido: '', telefono: '', fecha: '', hora: '',
+          personas: '2', ocasion: '', ubicacion: 'jardin', notas: ''
+        });
+      };
+      
+      if (!isOpen) return null;
+      
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+          >
+            <div className="sticky top-0 bg-ceiba-green p-6 flex items-center justify-between z-10">
+              <div className="text-white">
+                <h3 className="font-display text-2xl font-bold">Reserva tu Mesa</h3>
+                <p className="text-white/80 text-sm">Paso {step} de 2</p>
+              </div>
+              <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-full transition-colors text-white">
+                <Icon name="close" size={24} />
+              </button>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {step === 1 ? (
+                <>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-ceiba-dark mb-1">Nombre *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.nombre}
+                        onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl input-nature"
+                        placeholder="Juan"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-ceiba-dark mb-1">Apellido *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.apellido}
+                        onChange={(e) => setFormData({...formData, apellido: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl input-nature"
+                        placeholder="Pérez"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-ceiba-dark mb-1">Teléfono *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.telefono}
+                      onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl input-nature"
+                      placeholder="+53 7 123 4567"
+                    />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-ceiba-dark mb-1">Fecha *</label>
+                      <input
+                        type="date"
+                        required
+                        value={formData.fecha}
+                        onChange={(e) => setFormData({...formData, fecha: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl input-nature"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-ceiba-dark mb-1">Hora *</label>
+                      <input
+                        type="time"
+                        required
+                        value={formData.hora}
+                        onChange={(e) => setFormData({...formData, hora: e.target.value})}
+                        className="w-full px-4 py-3 rounded-xl input-nature"
+                      />
+                    </div>
+                  </div>
+                  
+                  <button
+                    type="button"
+                    onClick={() => setStep(2)}
+                    className="w-full bg-ceiba-green text-white py-4 rounded-xl font-bold text-lg hover:bg-ceiba-light transition-all flex items-center justify-center gap-2 shadow-lg"
+                  >
+                    Continuar
+                    <Icon name="chevronRight" size={20} />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-ceiba-dark mb-1">Número de personas</label>
+                    <select
+                      value={formData.personas}
+                      onChange={(e) => setFormData({...formData, personas: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl input-nature"
+                    >
+                      {[1,2,3,4,5,6,7,8,9,10,11,12].map(n => (
+                        <option key={n} value={n}>{n} {n === 1 ? 'persona' : 'personas'}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-ceiba-dark mb-3">Ubicación preferida</label>
+                    <div className="grid grid-cols-3 gap-3">
+                      {[
+                        { value: 'jardin', label: 'Jardín', icon: 'tree', desc: 'Bajo la ceiba' },
+                        { value: 'terraza', label: 'Terraza', icon: 'sun', desc: 'Vista al jardín' },
+                        { value: 'salon', label: 'Salón', icon: 'leaf', desc: 'Aire acondicionado' }
+                      ].map((opt) => (
+                        <label key={opt.value} className={`cursor-pointer p-4 rounded-xl border-2 transition-all text-center ${formData.ubicacion === opt.value ? 'border-ceiba-green bg-ceiba-green/5' : 'border-gray-200 hover:border-ceiba-green/30'}`}>
+                          <input
+                            type="radio"
+                            name="ubicacion"
+                            value={opt.value}
+                            checked={formData.ubicacion === opt.value}
+                            onChange={(e) => setFormData({...formData, ubicacion: e.target.value})}
+                            className="hidden"
+                          />
+                          <Icon name={opt.icon} size={24} className={`mx-auto mb-2 ${formData.ubicacion === opt.value ? 'text-ceiba-green' : 'text-gray-400'}`} />
+                          <span className="font-semibold block text-ceiba-dark">{opt.label}</span>
+                          <span className="text-xs text-gray-500">{opt.desc}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-ceiba-dark mb-1">Ocasión especial</label>
+                    <input
+                      type="text"
+                      value={formData.ocasion}
+                      onChange={(e) => setFormData({...formData, ocasion: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl input-nature"
+                      placeholder="Cumpleaños, aniversario, cena romántica..."
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-ceiba-dark mb-1">Notas adicionales</label>
+                    <textarea
+                      value={formData.notas}
+                      onChange={(e) => setFormData({...formData, notas: e.target.value})}
+                      rows="3"
+                      className="w-full px-4 py-3 rounded-xl input-nature resize-none"
+                      placeholder="Alergias alimentarias, sillas para niños, etc."
+                    />
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setStep(1)}
+                      className="flex-1 py-4 rounded-xl border-2 border-ceiba-green text-ceiba-green font-semibold hover:bg-ceiba-green/5 transition-all"
+                    >
+                      Atrás
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-[2] bg-ceiba-green hover:bg-ceiba-light text-white py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-lg"
+                    >
+                      <Icon name="whatsapp" size={24} />
+                      Confirmar por WhatsApp
+                    </button>
+                  </div>
+                </>
+              )}
+            </form>
+          </motion.div>
+        </div>
+      );
+    };
+    
+    // Back to Top Button
+    const BackToTop = () => {
+      const [isVisible, setIsVisible] = useState(false);
+      
+      useEffect(() => {
+        const toggleVisibility = () => {
+          setIsVisible(window.scrollY > 500);
+        };
+        window.addEventListener('scroll', toggleVisibility);
+        return () => window.removeEventListener('scroll', toggleVisibility);
+      }, []);
+      
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      
+      return (
+        <AnimatePresence>
+          {isVisible && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              onClick={scrollToTop}
+              className="fixed bottom-8 right-8 z-40 w-14 h-14 bg-ceiba-green text-white rounded-full shadow-lg hover:bg-ceiba-light transition-colors flex items-center justify-center"
+            >
+              <Icon name="arrowUp" size={24} />
+            </motion.button>
+          )}
+        </AnimatePresence>
+      );
+    };
+    
+    // Main App Component
+    const App = () => {
+      const [cart, setCart] = useState([]);
+      const [isCartOpen, setIsCartOpen] = useState(false);
+      const [isReservaOpen, setIsReservaOpen] = useState(false);
+      const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
+      const [isDark, setIsDark] = useState(false);
+      
+      const showToast = useCallback((message, type = 'success') => {
+        setToast({ show: true, message, type });
+      }, []);
+      
+      const hideToast = useCallback(() => {
+        setToast({ show: false, message: '', type: 'success' });
+      }, []);
+      
+      const addToCart = (item) => {
+        setCart(prev => {
+          const existing = prev.find(i => i.id === item.id);
+          if (existing) {
+            return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i);
+          }
+          return [...prev, { ...item, quantity: 1 }];
+        });
+        showToast(`${item.name} añadido a tu canasta 🌿`);
+      };
+      
+      const updateQuantity = (id, delta) => {
+        setCart(prev => prev.map(item => {
+          if (item.id === id) {
+            const newQty = Math.max(1, item.quantity + delta);
+            return { ...item, quantity: newQty };
+          }
+          return item;
+        }));
+      };
+      
+      const removeFromCart = (id) => {
+        setCart(prev => prev.filter(item => item.id !== id));
+        showToast('Producto eliminado', 'info');
+      };
+      
+      const handleCheckout = () => {
+        const numero = '5372605078';
+        let mensaje = `🌳 *Nuevo Pedido - La Ceiba Restaurant*\n\n`;
+        cart.forEach(item => {
+          mensaje += `• ${item.name} x${item.quantity} - ${item.price * item.quantity} CUP\n`;
+        });
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        mensaje += `\n*Total:* ${total} CUP\n\nGracias por elegirnos! 🌿`;
+        
+        window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        setCart([]);
+        setIsCartOpen(false);
+        showToast('Redirigiendo a WhatsApp...');
+      };
+      
+      const toggleTheme = () => {
+        setIsDark(!isDark);
+        document.body.style.backgroundColor = isDark ? '#F5F5DC' : '#1a2e0c';
+        document.body.style.color = isDark ? '#1f2937' : '#f3f4f6';
+      };
+      
+      return (
+        <div className={`${isDark ? 'dark' : ''}`}>
+          <Header 
+            cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+            onCartClick={() => setIsCartOpen(true)}
+            onReservaClick={() => setIsReservaOpen(true)}
+            isDark={isDark}
+            toggleTheme={toggleTheme}
+          />
+          
+          <main>
+            <Hero onReservaClick={() => setIsReservaOpen(true)} />
+            <AboutSection />
+            <MenuSection addToCart={addToCart} />
+            <Gallery />
+            <Testimonials />
+            <Location />
+          </main>
+          
+          <Footer />
+          
+          <CartSidebar 
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cart={cart}
+            updateQuantity={updateQuantity}
+            removeFromCart={removeFromCart}
+            onCheckout={handleCheckout}
+          />
+          
+          <ReservationModal 
+            isOpen={isReservaOpen}
+            onClose={() => setIsReservaOpen(false)}
+            showToast={showToast}
+          />
+          
+          <Toast 
+            message={toast.message}
+            type={toast.type}
+            isVisible={toast.show}
+            onClose={hideToast}
+          />
+          
+          <BackToTop />
+          
+          {/* Floating WhatsApp Button */}
+          <motion.a
+            href="https://wa.me/5372605078"
+            target="_blank"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            whileHover={{ scale: 1.1 }}
+            className="fixed bottom-8 left-8 z-40 w-16 h-16 bg-green-500 text-white rounded-full shadow-2xl flex items-center justify-center hover:shadow-green-500/50 transition-shadow"
+          >
+            <Icon name="whatsapp" size={32} />
+          </motion.a>
+        </div>
+      );
+    };
+    
+    // Render App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
